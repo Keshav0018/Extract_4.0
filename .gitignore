@@ -1,0 +1,12 @@
+# Ignore node modules
+node_modules/
+
+# Ignore configuration files (sensitive data)
+config/*
+
+# Optional: ignore environment files
+.env
+
+# Optional: ignore logs
+logs/
+*.log
