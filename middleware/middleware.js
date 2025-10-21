@@ -3,7 +3,7 @@ const Team = require("../models/teamModel");
 exports.setTestTeam = async function (req, res, next) {
   try {
     // Find a team with track -1 (unassigned) for testing
-    const team = await Team.findOne({ team_id: "T009" }).lean();
+    const team = await Team.findOne({ team_id: "T00" }).lean();
     if (!team) {
       return res
         .status(404)
