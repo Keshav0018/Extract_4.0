@@ -13,6 +13,8 @@ router
     questionController.submitAnswer(req.io)(req, res)
   ); // submit answer
 
+router.get("/tracksStatus", questionController.getTrackStatus);
+
 router
   .route("/")
   .post(questionController.createQuestion) // Create a new question

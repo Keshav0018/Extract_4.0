@@ -3,9 +3,11 @@ const Team = require("../models/teamModel");
 exports.setTestTeam = async function (req, res, next) {
   try {
     // Find a team with track -1 (unassigned) for testing
-    const team = await Team.findOne({ team_id: "T004" }).lean();
+    const team = await Team.findOne({ team_id: "T009" }).lean();
     if (!team) {
-      return res.status(404).json({ error: "No test team found with track 1" });
+      return res
+        .status(404)
+        .json({ status: "fail", error: "No test team found " });
     }
 
     // Remove password before attaching

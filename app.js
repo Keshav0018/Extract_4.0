@@ -14,13 +14,7 @@ const app = express();
 const server = http.createServer(app);
 
 // ✅ Middleware setup
-app.use(
-  cors({
-    origin: "http://localhost:3000", // React app URL
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+app.use(cors());
 
 app.use(express.json());
 app.use(morgan("dev"));
@@ -30,7 +24,7 @@ app.use(middleware.setTestTeam);
 // ✅ Initialize Socket.IO with proper CORS
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000", // must match frontend origin
+    origin: "http://localhost:5173", // must match frontend origin
     methods: ["GET", "POST"],
     credentials: true,
   },

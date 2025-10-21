@@ -166,6 +166,8 @@ module.exports.submitAnswer = (io) =>
       const session = await mongoose.startSession();
       session.startTransaction();
 
+      console.log("Received body:", req.body);
+
       try {
         // 1️⃣ Ensure team is in request
         if (!req.team) {
@@ -500,3 +502,52 @@ setInterval(() => {
     }
   }
 }, 5 * 60 * 1000);
+
+// Example controller for 4tracks game
+module.exports.getTrackStatus = async (req, res) => {
+  try {
+    // Step 1: Check if team present
+    if (!req.team) {
+      return res
+        .status(400)
+        .json({ status: "fail", message: "Team not found" });
+    }
+
+    const team = req.team; // already attached to request (maybe via middleware)
+    const track = team.track; // assuming track field in team model
+
+    // Step 2: If no track assigned yet (-1 means none)
+    if (track === -1) {
+      console.log("Siuu");
+      return res.json({
+        status: "success",
+        data: {
+          track1: "open",
+          track2: "open",
+          track3: "open",
+          track4: "open",
+        },
+      });
+    }
+
+    // Step 3: Based on team track
+    let tracksStatus = {
+      track1: "closed",
+      track2: "closed",
+      track3: "closed",
+      track4: "closed",
+    };
+
+    // Keep only the assigned track open
+    tracksStatus[`track${track}`] = "open";
+
+    // Step 4: Return response
+    return res.status(200).json({
+      status: "success",
+      data: tracksStatus,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ status: "fail", message: "Server error" });
+  }
+};
